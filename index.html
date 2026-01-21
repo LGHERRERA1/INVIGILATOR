@@ -5,159 +5,194 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invigilator Case - Consolidated Financial Statement</title>
     <style>
-        /* --- GENERAL STYLES --- */
+        /* --- GENERAL STYLES (Standalone - No External Libs) --- */
         :root {
             --primary: #0f172a; /* Slate 900 */
             --accent: #0d9488; /* Teal 600 */
             --accent-light: #ccfbf1; /* Teal 100 */
-            --bg-gray: #e2e8f0;
+            --bg-body: #cbd5e1; /* Darker gray for background frame */
             --text-dark: #1e293b;
             --text-light: #475569;
             --white: #ffffff;
-            --border: #cbd5e1;
+            --border: #cbd5e1; /* Darker border for grid lines */
         }
 
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-gray);
+            background-color: var(--bg-body);
             margin: 0;
-            padding: 20px;
+            padding: 40px 10px;
             color: var(--text-dark);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
-            height: 100vh; /* Full viewport height */
-            overflow: hidden; /* Prevent body scroll if possible */
+            align-items: flex-start; /* Align top with some margin */
+            box-sizing: border-box;
         }
 
-        /* Main Container */
+        /* Main Card Container (The "Paper") */
         .main-container {
             background: var(--white);
-            max-width: 1100px;
             width: 100%;
-            height: 95vh; /* Fit within screen */
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border-radius: 8px;
+            max-width: 720px; /* Slightly wider to accommodate larger font comfortably */
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            border-radius: 4px;
             overflow: hidden;
-            border: 1px solid var(--border);
             display: flex;
             flex-direction: column;
+            border: 1px solid #94a3b8;
         }
 
         /* Header */
         .header {
             background-color: var(--primary);
             color: white;
-            padding: 15px 25px; /* Compact padding */
+            padding: 12px 20px;
             border-bottom: 4px solid var(--accent);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-shrink: 0;
         }
 
-        .header h1 { margin: 0; font-size: 1.4rem; text-transform: uppercase; letter-spacing: 1px; }
-        .header p { margin: 2px 0 0; color: #2dd4bf; font-size: 0.85rem; font-weight: 600; }
+        .header h1 { margin: 0; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .header p { margin: 2px 0 0; color: #2dd4bf; font-size: 0.75rem; font-weight: 600; }
 
         .btn-menu {
             background-color: var(--accent);
             color: white;
             border: none;
-            padding: 8px 15px;
-            border-radius: 6px;
+            padding: 5px 12px;
+            border-radius: 3px;
             cursor: pointer;
             font-weight: bold;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 0.9rem;
-            transition: transform 0.2s, background 0.2s;
+            gap: 5px;
+            font-size: 0.8rem;
+            transition: background 0.2s;
         }
-        .btn-menu:hover { background-color: #0f766e; transform: scale(1.05); }
+        .btn-menu:hover { background-color: #0f766e; }
 
-        /* Table */
+        /* Table Styling */
         .table-container { 
-            overflow-y: auto; 
-            flex-grow: 1; 
+            overflow-x: auto; 
+            padding-bottom: 5px;
         }
-        table { width: 100%; border-collapse: collapse; min-width: 800px; }
         
-        th {
-            background-color: #f8fafc;
-            color: var(--text-dark);
-            text-align: right;
-            padding: 10px 8px;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            border-bottom: 2px solid var(--primary);
-            border-right: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 5;
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            table-layout: fixed; 
+            font-size: 0.9rem; /* INCREASED BASE FONT SIZE */
         }
-        th:first-child { text-align: left; padding-left: 20px; }
-        th.consolidado-header { background-color: var(--accent-light); color: #115e59; border-bottom-color: var(--accent); }
+        
+        /* ADJUSTED COLUMN WIDTHS */
+        th:nth-child(1) { width: 34%; } /* Account Name */
+        th:nth-child(2) { width: 16.5%; } 
+        th:nth-child(3) { width: 16.5%; } 
+        th:nth-child(4) { width: 16.5%; } 
+        th:nth-child(5) { width: 16.5%; } 
+
+        th {
+            background-color: #e2e8f0;
+            color: var(--text-dark);
+            text-align: center; /* CENTERED TITLES */
+            padding: 10px 4px;
+            font-size: 0.75rem; /* INCREASED FONT SIZE */
+            text-transform: uppercase;
+            border: 1px solid var(--border);
+            vertical-align: bottom;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+        th:first-child { text-align: left; padding-left: 12px; }
+        th.consolidado-header { background-color: var(--accent-light); color: #115e59; border-bottom: 2px solid var(--accent); }
 
         td {
-            padding: 5px 8px; /* Compact rows */
+            padding: 5px 6px;
             text-align: right;
-            border-right: 1px solid #f1f5f9;
+            border: 1px solid var(--border);
             font-family: 'Consolas', 'Monaco', monospace;
-            font-size: 0.9rem;
-            color: #475569;
+            font-size: 0.95rem; /* INCREASED NUMBER FONT SIZE */
+            color: #334155;
+            white-space: nowrap;
         }
         td:first-child { 
             text-align: left; 
-            padding-left: 20px; 
+            padding-left: 12px;
             font-family: inherit; 
-            font-weight: 500;
+            font-weight: 600; /* Bolder text for items */
             color: var(--text-dark);
+            white-space: normal;
+            font-size: 0.85rem; /* INCREASED TEXT FONT SIZE */
+            line-height: 1.2;
         }
 
-        /* Row Types */
-        tr:nth-child(even) { background-color: #f8fafc; }
-        tr:hover { background-color: #fef9c3; }
+        /* ZEBRA STRIPING & HOVER */
+        tr:nth-child(even) { background-color: #f1f5f9; }
+        tr:hover { background-color: #fffbeb; }
 
         .row-section td {
-            background-color: white;
-            font-size: 0.75rem;
+            background-color: #ffffff;
+            font-size: 0.75rem; /* Increased */
             font-weight: 900;
-            color: #94a3b8;
+            color: #64748b;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             padding-top: 15px;
-            padding-bottom: 5px;
-            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 6px;
+            border-bottom: 2px solid #cbd5e1;
             text-align: left;
+            padding-left: 12px;
         }
 
         .row-total td {
             background-color: #e2e8f0;
-            font-weight: bold;
+            font-weight: 800;
             color: var(--text-dark);
-            border-top: 2px solid #cbd5e1;
+            border-top: 2px solid #94a3b8;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            font-size: 0.95rem; /* Increased */
         }
 
         .row-grand-total td {
             background-color: var(--primary);
             color: #cbd5e1;
-            font-weight: bold;
-            font-size: 1rem;
-            padding: 10px 8px;
+            font-weight: 800;
+            font-size: 1rem; /* Increased */
+            padding: 12px 6px;
+            border: 1px solid #334155;
         }
-        .row-grand-total td:last-child { color: #2dd4bf; }
+        .row-grand-total td:last-child { color: #2dd4bf; font-size: 1.1rem; border-left: 1px solid #475569; }
 
         /* Interactive Cells */
         td.interactive {
-            background-color: rgba(13, 148, 136, 0.05);
-            color: #0f766e;
+            background-color: rgba(13, 148, 136, 0.08);
+            color: #0d9488;
             font-weight: bold;
             cursor: pointer;
             position: relative;
-            border-left: 2px solid var(--accent-light);
+            box-shadow: inset 0 0 0 1px rgba(13, 148, 136, 0.3);
         }
         td.interactive:hover {
             background-color: var(--accent-light);
             text-decoration: underline;
+            color: #0f766e;
+        }
+        
+        td.interactive-lemma {
+            background-color: rgba(59, 130, 246, 0.08);
+            color: #2563eb;
+            font-weight: bold;
+            cursor: pointer;
+            position: relative;
+            box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.3);
+        }
+        td.interactive-lemma:hover {
+            background-color: #dbeafe;
+            text-decoration: underline;
+            color: #1e40af;
         }
 
         /* --- SIDEBAR --- */
@@ -172,7 +207,7 @@
 
         .sidebar {
             position: fixed; top: 0; left: 0; height: 100%;
-            width: 700px; /* Wider for better layout */
+            width: 700px;
             max-width: 90%;
             background: white;
             z-index: 50;
@@ -197,7 +232,7 @@
 
         .nav-grid {
             display: grid;
-            grid-template-columns: repeat(7, 1fr); /* 7 items in one row */
+            grid-template-columns: repeat(7, 1fr);
             gap: 2px;
             padding: 5px;
             background: #f1f5f9;
@@ -216,7 +251,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            height: 50px; /* Compact height */
+            height: 50px;
         }
         .nav-item:hover { background: #e2e8f0; }
         .nav-item.active {
@@ -230,30 +265,16 @@
 
         .sidebar-content {
             flex: 1;
-            overflow-y: auto; /* Scroll only if absolutely necessary */
+            overflow-y: auto;
             padding: 20px;
             background-color: #f8fafc;
         }
 
-        /* Grid for cards to save vertical space */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* 2 columns */
-            gap: 10px;
-        }
-        .cards-grid-3 {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr; /* 3 columns */
-            gap: 10px;
-        }
-
-        /* Cards */
+        .cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        
         .card {
-            background: white;
-            padding: 12px;
-            border-radius: 6px;
-            border: 1px solid #e2e8f0;
-            margin-bottom: 10px;
+            background: white; padding: 12px; border-radius: 6px;
+            border: 1px solid #e2e8f0; margin-bottom: 10px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
         .card.full-width { grid-column: span 2; }
@@ -268,19 +289,15 @@
         .bg-red { background: #fee2e2; color: #991b1b; }
         .bg-blue { background: #dbeafe; color: #1e40af; }
 
-        /* Dynamic Content */
         .tab-pane { display: none; }
         .tab-pane.active { display: block; animation: slideIn 0.2s; }
         .tab-title { color: var(--accent); margin-top: 0; margin-bottom: 10px; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
-        
         @keyframes slideIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
         .theory-box { background: #eff6ff; padding: 10px; border-radius: 6px; border: 1px solid #bfdbfe; font-size: 0.85rem; color: #1e3a8a; margin-bottom: 15px; line-height: 1.4; }
-        
-        /* Step Calculation Rows */
         .calc-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #eee; font-size: 0.85rem; }
         .calc-row span:last-child { font-family: monospace; font-weight: bold; font-size: 0.95rem; }
-        .calc-total { background: var(--primary); color: white; padding: 8px; border-radius: 4px; margin-top: 10px; font-weight: bold; display: flex; justify-content: space-between; }
+        .calc-total { background: var(--primary); color: white; padding: 8px; border-radius: 4px; margin-top: 10px; font-weight: bold; display: flex; justify-content: space-between; font-size: 0.85rem; }
 
         /* Modal */
         .modal-wrapper {
@@ -292,11 +309,11 @@
             transition: opacity 0.2s;
         }
         .modal-wrapper.open { opacity: 1; pointer-events: auto; }
-        .modal-box { background: white; width: 90%; max-width: 400px; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 25px rgba(0,0,0,0.2); transform: scale(0.9); transition: transform 0.2s; }
+        .modal-box { background: white; width: 90%; max-width: 380px; border-radius: 8px; overflow: hidden; box-shadow: 0 20px 25px rgba(0,0,0,0.2); transform: scale(0.95); transition: transform 0.2s; }
         .modal-wrapper.open .modal-box { transform: scale(1); }
-        .modal-head { background: var(--accent); padding: 12px 15px; color: white; display: flex; justify-content: space-between; font-weight: bold; }
-        .modal-body { padding: 20px; }
-        .close-btn { background: none; border: none; color: white; cursor: pointer; font-size: 1.2rem; }
+        .modal-head { background: var(--accent); padding: 10px 15px; color: white; display: flex; justify-content: space-between; font-weight: bold; font-size: 0.95rem; }
+        .modal-body { padding: 15px; }
+        .close-btn { background: none; border: none; color: white; cursor: pointer; font-size: 1.1rem; }
 
     </style>
 </head>
@@ -310,7 +327,7 @@
                 <p>Interactive Consolidated Statement</p>
             </div>
             <button class="btn-menu" onclick="toggleSidebar()">
-                <span style="font-size:1.2rem">📚</span> Educational Menu
+                <span style="font-size:1rem">📚</span> Menu
             </button>
         </div>
 
@@ -321,9 +338,9 @@
                     <tr>
                         <th>Account / Item</th>
                         <th>Invigilator</th>
-                        <th>Lemma <br><span style="font-weight:400; font-size:0.7em">(Book Value)</span></th>
-                        <th>Lemma <br><span style="font-weight:400; font-size:0.7em">(Fair Value)</span></th>
-                        <th class="consolidado-header">Consolidated<br><span style="font-weight:400; font-size:0.7em; color: inherit;">(Click for details)</span></th>
+                        <th>Lemma <br><span style="font-weight:400; font-size:0.7em">(Book)</span></th>
+                        <th class="consolidado-header" style="background-color:rgba(59, 130, 246, 0.1); border-bottom-color:#3b82f6; color:#1e40af">Lemma <br><span style="font-weight:400; font-size:0.7em">(FV - Click!)</span></th>
+                        <th class="consolidado-header">Consolidated<br><span style="font-weight:400; font-size:0.7em; color: inherit;">(Details)</span></th>
                     </tr>
                 </thead>
                 <tbody id="table-body">
@@ -352,8 +369,7 @@
         </div>
 
         <div class="sidebar-content">
-            
-            <!-- OVERVIEW -->
+            <!-- STEP 0: OVERVIEW -->
             <div id="step0" class="tab-pane active">
                 <h2 class="tab-title">Consolidation Logic Overview</h2>
                 <div class="cards-grid">
@@ -526,15 +542,27 @@
         // --- DATA ---
         const tableRows = [
             { type: 'section', label: 'ASSETS' },
-            { type: 'row', label: 'Intangible assets', c1: '-', c2: '2,000', c3: '82,000', c4: '82,000', info: { title: 'Intangible Assets', theory: 'Under IFRS 3, recognize acquiree assets at Fair Value even if not in books.', math: '0 + 82,000 = 82,000', text: 'Recognized Patent (FV 80k) + Book (2k).' } },
+            { 
+                type: 'row', label: 'Intangible assets', c1: '-', c2: '2,000', c3: '82,000', c4: '82,000', 
+                info: { title: 'Intangible Assets', theory: 'Under IFRS 3, recognize acquiree assets at Fair Value even if not in books.', math: '0 + 82,000 = 82,000', text: 'Recognized Patent (FV 80k) + Book (2k).' },
+                lemmaFvInfo: { title: 'FV Adjustment: Intangibles', theory: 'Recognition of internally generated patent.', math: '82,000 (FV) - 2,000 (Book) = +80,000 Adjustment', text: 'Assets must be recognized at fair value.'}
+            },
             { type: 'row', label: 'Goodwill', c1: '-', c2: '-', c3: '-', c4: '222,000', info: { title: 'Goodwill', theory: 'Premium paid over the Fair Market Value of net assets.', steps: [['Price Paid', '600,000'], ['- Acquired Value', '378,000'], ['= Goodwill', '222,000']] } },
-            { type: 'row', label: 'Property, plant & equipment', c1: '490,000', c2: '80,000', c3: '160,000', c4: '650,000', info: { title: 'PPE', math: '490,000 + 160,000 = 650,000', text: 'Using Lemma\'s Fair Value (160k).' } },
+            { 
+                type: 'row', label: 'Property, plant & equipment', c1: '490,000', c2: '80,000', c3: '160,000', c4: '650,000', 
+                info: { title: 'PPE', math: '490,000 + 160,000 = 650,000', text: 'Using Lemma\'s Fair Value (160k).' },
+                lemmaFvInfo: { title: 'FV Adjustment: PPE', theory: 'Revaluation of property to market rates.', math: '160,000 (FV) - 80,000 (Book) = +80,000 Adjustment', text: 'Increase in value of corporate offices.'}
+            },
             { type: 'row', label: 'Investment in Lemma', c1: '600,000', c2: '-', c3: '-', c4: '-', info: { title: 'Investment Elimination', theory: 'Investment eliminated against Subsidiary Equity.', math: '600,000 - 600,000 = 0', text: 'Asset removed.' } },
-            { type: 'row', label: 'Inventories', c1: '230,000', c2: '360,000', c3: '320,000', c4: '550,000', info: { title: 'Inventories', math: '230,000 + 320,000 = 550,000', text: 'Inventory adjusted down to Fair Value (-40k).' } },
+            { 
+                type: 'row', label: 'Inventories', c1: '230,000', c2: '360,000', c3: '320,000', c4: '550,000', 
+                info: { title: 'Inventories', math: '230,000 + 320,000 = 550,000', text: 'Inventory adjusted down to Fair Value (-40k).' },
+                lemmaFvInfo: { title: 'FV Adjustment: Inventories', theory: 'Write-down to net realizable value or fair value.', math: '320,000 (FV) - 360,000 (Book) = -40,000 Adjustment', text: 'Decrease due to obsolescence or market conditions.'}
+            },
             { type: 'row', label: 'Trade and other receivables', c1: '400,000', c2: '240,000', c3: '240,000', c4: '540,000', info: { title: 'Receivables', math: '(400k + 240k) - 100k', text: 'Internal debt eliminated.' } },
             { type: 'grand', label: 'TOTAL ASSETS', c1: '1,720,000', c2: '682,000', c3: '802,000', c4: '2,044,000' },
             
-            { type: 'space' },
+            // Removed empty spacer row here per user request
             { type: 'section', label: 'EQUITY' },
             { type: 'row', label: 'Share capital', c1: '1,000,000', c2: '200,000', c3: '-', c4: '1,000,000', info: {title: 'Share Capital', theory: 'Only Parent capital shown.', math:'Parent Only', text: 'Lemma capital eliminated.'} },
             { type: 'row', label: 'Reserves', c1: '140,000', c2: '100,000', c3: '-', c4: '140,000', info: {title: 'Reserves', theory: 'Only Parent reserves shown.', math:'Parent Only', text: 'Pre-acquisition reserves eliminated.'} },
@@ -547,7 +575,7 @@
             { type: 'row', label: 'Current liabilities', c1: '560,000', c2: '352,000', c3: '352,000', c4: '812,000', info: { title: 'Liabilities', math: '(560k + 352k) - 100k', text: 'Intra-group debt elimination.' } },
             { type: 'total', label: 'TOTAL LIABILITIES', c1: '580,000', c2: '382,000', c3: '382,000', c4: '862,000' },
             
-            { type: 'space' },
+            // Removed empty spacer row here per user request
             { type: 'grand', label: 'TOTAL EQUITY & LIABILITIES', c1: '1,720,000', c2: '682,000', c3: '802,000', c4: '2,044,000' },
         ];
 
@@ -566,8 +594,19 @@
                 html += `<tr class="row-grand-total"><td>${r.label}</td><td>${r.c1}</td><td>${r.c2}</td><td>${r.c3}</td><td>${r.c4}</td></tr>`;
             } else {
                 const clickable = r.info ? 'interactive' : '';
-                const clickAttr = r.info ? `onclick="openModal(${i})"` : '';
-                html += `<tr><td>${r.label}</td><td>${r.c1}</td><td>${r.c2}</td><td>${r.c3}</td><td class="${clickable}" ${clickAttr}>${r.c4}</td></tr>`;
+                const clickAttr = r.info ? `onclick="openModal(${i}, 'consolidated')"` : '';
+                
+                // Add interaction for Lemma FV Column (index 3, i.e., r.c3)
+                const clickableLemma = r.lemmaFvInfo ? 'interactive-lemma' : '';
+                const clickAttrLemma = r.lemmaFvInfo ? `onclick="openModal(${i}, 'lemma')"` : '';
+
+                html += `<tr>
+                    <td>${r.label}</td>
+                    <td>${r.c1}</td>
+                    <td>${r.c2}</td>
+                    <td class="${clickableLemma}" ${clickAttrLemma}>${r.c3}${r.lemmaFvInfo ? '<span class="badge bg-blue" style="float:right; transform:scale(0.7)">ℹ</span>' : ''}</td>
+                    <td class="${clickable}" ${clickAttr}>${r.c4}</td>
+                </tr>`;
             }
         });
         tbody.innerHTML = html;
@@ -585,8 +624,10 @@
             if(btn) btn.classList.add('active');
         }
 
-        function openModal(index) {
-            const info = tableRows[index].info;
+        function openModal(index, type) {
+            const row = tableRows[index];
+            const info = type === 'lemma' ? row.lemmaFvInfo : row.info;
+            
             if(!info) return;
             document.getElementById('modalTitle').innerText = info.title;
             const body = document.getElementById('modalBody');
