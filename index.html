@@ -34,7 +34,7 @@
         .main-container {
             background: var(--white);
             width: 100%;
-            max-width: 720px; /* Slightly wider to accommodate larger font comfortably */
+            max-width: 720px; /* Wider to accommodate larger font comfortably */
             box-shadow: 0 20px 40px rgba(0,0,0,0.2);
             border-radius: 4px;
             overflow: hidden;
@@ -468,8 +468,13 @@
                     <div class="calc-total">
                         <span>GOODWILL</span> <span>222,000</span>
                     </div>
-                    <div style="font-size:0.75rem; margin-top:8px; color:#666; text-align:center">
-                        *Acquired Value = (300k Book Equity + 120k FV Adj) × 90%
+                    <div style="font-size:0.75rem; margin-top:8px; color:#666; background-color:#f8fafc; padding:8px; border-radius:4px; line-height: 1.4; border: 1px solid #e2e8f0;">
+                        <strong style="color:var(--primary);">*How are the 420k Net Assets (FV) calculated?</strong><br>
+                        • Lemma Capital: 200,000<br>
+                        • Lemma Reserves: 100,000<br>
+                        • FV Adjustments: +120,000 (Patents +80k, PPE +80k, Inv -40k)<br>
+                        <strong>Total Net Assets = 420,000</strong><br>
+                        <i>(Invigilator acquires 90% of 420,000 = 378,000)</i>
                     </div>
                 </div>
             </div>
@@ -484,8 +489,15 @@
                 <div class="card full-width" style="border-top: 4px solid #a855f7">
                     <div class="calc-row"><span>Lemma Capital</span> <span>200,000</span></div>
                     <div class="calc-row"><span>Lemma Reserves</span> <span>100,000</span></div>
-                    <div class="calc-row"><span>FV Adjustments</span> <span style="color:var(--accent)">+120,000</span></div>
-                    <div class="calc-row" style="background:#f8fafc; font-weight:bold; border-top:2px solid #ddd"><span>Total Net Assets (FV)</span> <span>420,000</span></div>
+                    <div class="calc-row" style="flex-direction: column; border-bottom: none; padding-bottom: 0;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>FV Adjustments</span> <span style="color:var(--accent)">+120,000</span>
+                        </div>
+                        <div style="font-size: 0.7rem; color: var(--text-light); margin-top: 2px;">
+                            (Patents +80k, PPE +80k, Inventory -40k)
+                        </div>
+                    </div>
+                    <div class="calc-row" style="background:#f8fafc; font-weight:bold; border-top:1px solid #ddd; margin-top: 6px; padding-top: 8px;"><span>Total Net Assets (FV)</span> <span>420,000</span></div>
                     
                     <div style="text-align:center; padding:10px; font-weight:bold; color:#6b21a8; font-size:0.9rem">× 10% Minority Stake</div>
                     
@@ -547,7 +559,7 @@
                 info: { title: 'Intangible Assets', theory: 'Under IFRS 3, recognize acquiree assets at Fair Value even if not in books.', math: '0 + 82,000 = 82,000', text: 'Recognized Patent (FV 80k) + Book (2k).' },
                 lemmaFvInfo: { title: 'FV Adjustment: Intangibles', theory: 'Recognition of internally generated patent.', math: '82,000 (FV) - 2,000 (Book) = +80,000 Adjustment', text: 'Assets must be recognized at fair value.'}
             },
-            { type: 'row', label: 'Goodwill', c1: '-', c2: '-', c3: '-', c4: '222,000', info: { title: 'Goodwill', theory: 'Premium paid over the Fair Market Value of net assets.', steps: [['Price Paid', '600,000'], ['- Acquired Value', '378,000'], ['= Goodwill', '222,000']] } },
+            { type: 'row', label: 'Goodwill', c1: '-', c2: '-', c3: '-', c4: '222,000', info: { title: 'Goodwill', theory: 'Premium paid over the Fair Market Value of net assets.<br><br><strong style="color:var(--primary);">*Net Assets (420,000) Breakdown:</strong><br>Capital (200k) + Reserves (100k) + FV Adjustments (120k).<br><em>Acquired Value is 90% of 420,000 = 378,000.</em>', steps: [['Price Paid', '600,000'], ['- Acquired Value (90%)', '378,000'], ['= Goodwill', '222,000']] } },
             { 
                 type: 'row', label: 'Property, plant & equipment', c1: '490,000', c2: '80,000', c3: '160,000', c4: '650,000', 
                 info: { title: 'PPE', math: '490,000 + 160,000 = 650,000', text: 'Using Lemma\'s Fair Value (160k).' },
@@ -562,20 +574,17 @@
             { type: 'row', label: 'Trade and other receivables', c1: '400,000', c2: '240,000', c3: '240,000', c4: '540,000', info: { title: 'Receivables', math: '(400k + 240k) - 100k', text: 'Internal debt eliminated.' } },
             { type: 'grand', label: 'TOTAL ASSETS', c1: '1,720,000', c2: '682,000', c3: '802,000', c4: '2,044,000' },
             
-            // Removed empty spacer row here per user request
             { type: 'section', label: 'EQUITY' },
             { type: 'row', label: 'Share capital', c1: '1,000,000', c2: '200,000', c3: '-', c4: '1,000,000', info: {title: 'Share Capital', theory: 'Only Parent capital shown.', math:'Parent Only', text: 'Lemma capital eliminated.'} },
             { type: 'row', label: 'Reserves', c1: '140,000', c2: '100,000', c3: '-', c4: '140,000', info: {title: 'Reserves', theory: 'Only Parent reserves shown.', math:'Parent Only', text: 'Pre-acquisition reserves eliminated.'} },
-            { type: 'row', label: 'Non-controlling interest', c1: '-', c2: '-', c3: '-', c4: '42,000', info: { title: 'NCI', theory: '10% minority stake on Fair Value Net Assets.', steps: [['Net Assets (FV)', '420,000'], ['× 10% Minority', '10%'], ['= NCI', '42,000']] } },
+            { type: 'row', label: 'Non-controlling interest', c1: '-', c2: '-', c3: '-', c4: '42,000', info: { title: 'NCI', theory: '10% minority stake on Fair Value Net Assets.<br><br><strong style="color:var(--primary);">*Net Assets (420,000) Breakdown:</strong><br>• Book Equity: 300,000 (Capital 200k + Reserves 100k)<br>• FV Adjustments: +120,000 (Patents +80k, PPE +80k, Inv -40k)<br><strong>Total = 420,000</strong>', steps: [['Net Assets (FV)', '420,000'], ['× 10% Minority', '10%'], ['= NCI', '42,000']] } },
             { type: 'total', label: 'TOTAL EQUITY', c1: '1,140,000', c2: '300,000', c3: '420,000', c4: '1,182,000' },
             
-            { type: 'space' },
             { type: 'section', label: 'LIABILITIES' },
             { type: 'row', label: 'Provisions', c1: '20,000', c2: '30,000', c3: '30,000', c4: '50,000' },
             { type: 'row', label: 'Current liabilities', c1: '560,000', c2: '352,000', c3: '352,000', c4: '812,000', info: { title: 'Liabilities', math: '(560k + 352k) - 100k', text: 'Intra-group debt elimination.' } },
             { type: 'total', label: 'TOTAL LIABILITIES', c1: '580,000', c2: '382,000', c3: '382,000', c4: '862,000' },
             
-            // Removed empty spacer row here per user request
             { type: 'grand', label: 'TOTAL EQUITY & LIABILITIES', c1: '1,720,000', c2: '682,000', c3: '802,000', c4: '2,044,000' },
         ];
 
@@ -586,8 +595,6 @@
         tableRows.forEach((r, i) => {
             if(r.type === 'section') {
                 html += `<tr class="row-section"><td colspan="5">${r.label}</td></tr>`;
-            } else if (r.type === 'space') {
-                html += `<tr><td colspan="5" style="height:10px"></td></tr>`;
             } else if (r.type === 'total') {
                 html += `<tr class="row-total"><td>${r.label}</td><td>${r.c1}</td><td>${r.c2}</td><td>${r.c3}</td><td>${r.c4}</td></tr>`;
             } else if (r.type === 'grand') {
@@ -604,7 +611,7 @@
                     <td>${r.label}</td>
                     <td>${r.c1}</td>
                     <td>${r.c2}</td>
-                    <td class="${clickableLemma}" ${clickAttrLemma}>${r.c3}${r.lemmaFvInfo ? '<span class="badge bg-blue" style="float:right; transform:scale(0.7)">ℹ</span>' : ''}</td>
+                    <td class="${clickableLemma}" ${clickAttrLemma}>${r.c3}</td>
                     <td class="${clickable}" ${clickAttr}>${r.c4}</td>
                 </tr>`;
             }
